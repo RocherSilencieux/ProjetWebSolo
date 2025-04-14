@@ -81,4 +81,9 @@ class User extends Authenticatable
             ->withPivot('role')
             ->first();
     }
+
+    public function commonLife()
+    {
+        return $this->hasMany(CommonLife::class, 'users_common_lifes');
+    }
 }

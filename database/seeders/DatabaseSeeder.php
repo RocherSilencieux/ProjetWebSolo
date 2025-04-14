@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CommonLife;
 use App\Models\School;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -64,5 +65,7 @@ class DatabaseSeeder extends Seeder
             'school_id' => $school->id,
             'role'      => 'student'
         ]);
+
+
     }
 }

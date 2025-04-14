@@ -20,14 +20,16 @@
                                 <th>
                                     Titre
                                 </th>
-                                <th>
+                                <th class="w-[80px]">
                                     Description
                                 </th>
                                 <th>
-                                    Order Date
+                                    Done
                                 </th>
                                 <th>
+                                    Commentaire
                                 </th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,29 +42,55 @@
 
                                 <tr>
                                     <td>
-
-                                        <input name="title" type="text" value="{{$task->title}}" onchange="this.form.submit()">
-                                        <input type="hidden" id="id" name="id" value="{{$task->task_id}}">
+                                        @if(auth()->user()->school()->pivot->role == "admin")
+                                            <input name="title" type="text" value="{{$task->title}}" onchange="this.form.submit()" size="10">
+                                            <input type="hidden" id="id" name="id" value="{{$task->id}}">
+                                        @else
+                                            {{$task->title}}
+                                        @endif
 
 
                                     </td>
                                     <td>
+                                        @if(auth()->user()->school()->pivot->role == "admin")
                                         <input name="description" type="text" value="{{$task->description}}" onchange="this.form.submit()">
-                                        <input type="hidden" id="id" name="id" value="{{$task->task_id}}">
-                                    </td>
-                                    <td>
-                                        5 Jan, 2024
+                                        <input type="hidden" id="id" name="id" value="{{$task->id}}">
+                                        @else
+                                            {{$task->description}}
+                                        @endif
                                     </td>
                                 </form>
+                                    <td>
+                                        <form method="post" action="{{route('common-life.swapDone')}}">
+                                            @csrf
+                                            @method('PUT')
+                                        <button type="submit">
+                                            @if($task->done == true) YES by {{$task->doneby}}
+                                            @elseif($task->done == false) NO
+                                            @endif
+                                        </button>
+                                            <input type="hidden" id="id" name="id" value="{{$task->id}}">
+                                        </form>
+                                    </td>
+                                <td>
+                                    <form method="post" action="{{route('common-life.edit')}}">
+                                        @csrf
+                                        @method('PUT')
+                                    <input type="hidden" id="id" name="id" value="{{$task->id}}">
+                                    <textarea type="text" name="comment"  onchange="this.form.submit()">{{$task->comment}}</textarea>
+                                    </form>
+                                </td>
 
                                 <td>
+                                    @if(auth()->user()->school()->pivot->role == "admin")
                                     <form method="POST" action="{{route('common-life.destroy')}}">
                                         @csrf
-                                        <input type="hidden" id="id" name="id" value="{{$task->task_id}}">
+                                        <input type="hidden" id="id" name="id" value="{{$task->id}}">
                                         <button type="submit">
                                             Supprimer
                                         </button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                             </tbody>
@@ -76,6 +104,8 @@
                 </div>
             </div>
         </div>
+
+        @if(auth()->user()->school()->pivot->role == "admin")
         <div class="lg:col-span-1">
             <div class="card h-full">
                 <div class="card-header">
@@ -95,6 +125,7 @@
                         </x-forms.primary-button>
                     </div>
                 </form>
+                 @endif
             </div>
         </div>
     </div>

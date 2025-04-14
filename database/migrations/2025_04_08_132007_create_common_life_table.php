@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('CommonLife', function (Blueprint $table) {
-            $table->id('task_id')->primary();
+            $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('title');
             $table->text('description');
+            $table->boolean('done')->default(false);
+            $table->text('doneby')->nullable();
+            $table->text('comment')->default('');
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }
