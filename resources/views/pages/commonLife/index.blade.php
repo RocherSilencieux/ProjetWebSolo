@@ -34,6 +34,7 @@
                             </thead>
                             <tbody>
                             @foreach($tasks as $task)
+                                @if(!$task->deleted)
 
                                 <form method="post">
                                     @csrf
@@ -94,6 +95,7 @@
                                 </td>
                             </tr>
                             </tbody>
+                            @endif
                             @endforeach
                         </table>
 

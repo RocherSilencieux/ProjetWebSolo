@@ -46,7 +46,10 @@ class CommonLifeController extends Controller
     public function destroy(request $request)
     {
         $id = $request->id;
-        commonlife::where('id', $id)->delete();
+        $task = CommonLife::where('id', $id);
+        $task->update([
+            'deleted' => true,
+        ]);
         return redirect()->route('common-life.index');
     }
 
