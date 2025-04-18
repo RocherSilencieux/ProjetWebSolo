@@ -26,6 +26,7 @@ class CommonLifeController extends Controller
 
     public function create(request $request)
     {
+
         $user = Auth::user();
         $title = $request->input('title');
         $description = $request->input('description');
@@ -55,6 +56,7 @@ class CommonLifeController extends Controller
 
     public function edit(request $request)
     {
+        //edit the information in the database with every possible cases
         $id = $request->id;
         $task = CommonLife::where('id', $id)->first();
         $title = $task->title;
@@ -77,6 +79,7 @@ class CommonLifeController extends Controller
 
     public function swapDone(request $request)
     {
+        //swap between done by someone and not done when clicking on it
         $user = Auth::user();
         $id = $request->id;
         $task = CommonLife::where('id',$id)->first();

@@ -9,6 +9,7 @@ class ExamController extends Controller
 {
     public function index($id)
     {
+
         $gemini = Gemini::where('id', $id)->first();
         return view('pages.exam.index', [
             'id'    => $id,

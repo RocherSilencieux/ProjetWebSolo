@@ -15,9 +15,11 @@ class GeminiController extends Controller
 
     public function generate(Request $request)
     {
+        //get all the inputs from the user
         $language = $request->input('language');
         $numberOfQuestions = $request->input('numberOfQuestions');
         $numberOfChoices = $request->input('numberOfChoices');
+        //make the prompt with the inputs from the user
         $prompt = "Génère un questionnaire pédagogique au format JSON.
 
 Langage de programmation ciblé : ".$language."
@@ -45,7 +47,7 @@ Contraintes :
 - Utilise uniquement des doubles guillemets pour le JSON.
 
 Merci de ne renvoyer que le JSON final.";
-
+        //use the gemini API to get the answer from the prompt
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
         ])->post( 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . config('services.gemini.api_key'), [
@@ -62,7 +64,7 @@ Merci de ne renvoyer que le JSON final.";
         $text = $result['candidates'][0]['content']['parts'][0]['text'] ?? 'Aucune réponse.';
         $cleanJson = preg_replace('/^```json\s*/', '', $text);
         $cleanJson = preg_replace('/\s*```$/', '', $cleanJson);
-        $json = json_decode($cleanJson, true);
+        //save the qcm in the database
         $Gemini = Gemini::create([
                 'language' => $language,
                 'number_of_questions' => $numberOfQuestions,
