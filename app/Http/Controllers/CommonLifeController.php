@@ -62,9 +62,9 @@ class CommonLifeController extends Controller
         $comment = $task->comment;
         if($request->input('title') != null){
             $title = $request->input('title');
-        }elseif($request->input('description') != null){
+        }if($request->input('description') != null){
             $description = $request->input('description');
-        }elseif($request->input('comment') != null){
+        }if($request->input('comment') != null){
             $comment = $request->input('comment');
         }
         $task->update([

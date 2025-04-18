@@ -29,7 +29,7 @@
                                     Done
                                 </th>
                                 <th>
-                                    Status
+                                    Comment
                                 </th>
                             </tr>
                             </thead>
